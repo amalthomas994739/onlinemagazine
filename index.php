@@ -1,3 +1,45 @@
+<?php
+include ('connection.php');
+
+session_start();
+if(isset($_SESSION['USER_ID']))
+{
+    header('location:table.php');
+}
+
+
+{
+    $Username=$_POST['usename'];
+    $Password=$_POST['password'];
+    $result=mysqli_query($conn,"SELECT * 
+    FROM login_tb WHERE  username='$Username'AND password='$Password'");
+ //    $result1=mysqli_fetch_assoc($result);
+    // var_dump($result1);
+    if(mysqli_num_rows($result)>0)
+    {
+
+        $row_data=mysqli_fetch_array($result);
+
+        $_SESSION['USER_ID']= $row_data['login_id'];
+
+
+    header('location:dashboard.php');
+    
+
+    }
+    
+    else
+    {
+        echo " You Have Entered Incorrect Password";
+        exit();
+    }
+}
+
+?>
+
+
+
+
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
